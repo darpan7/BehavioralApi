@@ -4,10 +4,15 @@ import { Company } from "../../company/company.model";
 import { Question } from "../../questions/question.model";
 import { QuestionService } from "../../questions/services/question.service";
 import { Tag } from "../../Tags/tag.model";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root' 
+})
 export class StoryService {
     storySelected = new EventEmitter<Story>();
+    private baseUrl = 'http://localhost:8080/story';
     private stories: Story[] = [
         /*new Story(
             0,
@@ -25,7 +30,7 @@ export class StoryService {
         )*/
     ];
 
-    constructor(private questionService: QuestionService){
+    constructor(private questionService: QuestionService, private http: HttpClient){
         let tmp_strs: Story[] = this.sqlAll();
         for (let stry of tmp_strs.slice()){
             let qs: Question[] = this.sqlQuestion(stry.id);
@@ -46,8 +51,9 @@ export class StoryService {
         }
         return tmp_strs.slice();
     }
-    getStories() {
-        return this.stories.slice();
+    getStories(): Observable<any> {
+        return this.http.get(this.baseUrl);
+        //return this.stories.slice();
     }
 
     sqlAll(): Story[] {

@@ -12,6 +12,7 @@ import { QuestionListComponent } from './questions/question-list/question-list.c
 import { QuestionDetailComponent } from './questions/question-detail/question-detail.component';
 import { QuestionItemComponent } from './questions/question-list/question-item/question-item.component';
 import { QuestionService } from './questions/services/question.service';
+import { HttpClientModule } from '@angular/common/http';
 
 const appRoutes: Routes = [
   {path: '', component: StoriesComponent},
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [StoryService, QuestionService],

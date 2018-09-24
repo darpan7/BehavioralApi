@@ -14,6 +14,7 @@ export class Story {
     public company: Company;
     public tags: Tag[] = [];
     public questions: Question[] = [];
+    public title: String;
 
     constructor(id: Number, name: String, company: Company, parent_story: Number, s: String, ta: String, r: String) {
         this.name = name;
@@ -24,6 +25,7 @@ export class Story {
         this.ta = ta;
         this.r = r;
         this.id = id;
+        this.title = name;
         
         //this.tags.push(new Tag(id, "#tag-1"));
         //this.tags.push(new Tag(id, "#tag-2"));
