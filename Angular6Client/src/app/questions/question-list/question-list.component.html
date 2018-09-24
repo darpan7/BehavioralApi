@@ -1,0 +1,15 @@
+<hr>
+<div class="row">
+    <div class="col-xs-12">
+      <button class="btn btn-success">New Question</button>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-xs-12">
+        <app-question-item 
+        *ngFor="let question of questions" 
+        [question]="question"></app-question-item>
+    </div>
+</div>
+  

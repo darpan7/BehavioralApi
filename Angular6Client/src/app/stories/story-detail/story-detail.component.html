@@ -1,0 +1,98 @@
+ <div class="row">
+      <div class="col-xs-12">
+        
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h2>{{ routed_story.name }}</h2>
+    </div>
+  </div>
+  <!--<div class="row">
+    <div class="col-xs-12">
+      <div class="btn-group" appDropdown>
+          <button type="button" class="btn btn-primary dropdown-toggle">Manage Recipe <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><a (click)="onAddToShoppingList()" style="cursor: pointer;">To Shopping List</a></li>
+            <li><a href="">Edit Recipe</a></li>
+            <li><a href="">Delete Recipe</a></li>
+          </ul>
+      </div>
+    </div>
+  </div>-->
+  <div class="row">
+      <div class="col-xs-12">
+      <dl>
+        <dt> <span class="badge badge-success">Situation:</span></dt>
+        <dd>
+          <div class="col-xs-12">
+              <div class="text-justify">
+                {{routed_story.s}}
+              </div>
+          </div>
+        </dd>
+        <dt><span class="badge badge-success">Task/Actions:</span></dt>
+        <dd>
+          <div class="col-xs-12">
+              <div class="text-justify"> {{routed_story.ta}} </div>
+          </div>
+        </dd>
+        <dt><span class="badge badge-success">Result:</span></dt>
+        <dd>
+          <div class="col-xs-12">
+            {{routed_story.r}}
+          </div>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-xs-6">
+      parent_version: {{routed_story.parent_story}}
+    </div>
+    <div class="col-xs-6">
+      <span class="pull-right">
+        id: {{routed_story.id}}
+      </span>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12">
+        Associated Questions:
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let question of routed_story.questions">
+          <a routerLink="/questions/{{question.id}}">
+            {{question.name}}
+            <span class="pull-right">
+              {{question.type}}
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="row">
+    
+    <div class="col-xs-12">
+      <ul class="list-inline">
+        <li class="list-inline-item">Associated Tags:</li>
+        <li class="list-inline-item" *ngFor="let tag of routed_story.tags">
+          <a routerLink="/tags/{{tag.id}}">{{tag.name}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-5">
+      <a routerLink="/comapny/{{routed_story.company.id}}">{{routed_story.company.name}}</a>
+    </div>
+    <div class="col-xs-7">
+      <span class="pull-right">
+        created : {{routed_story.dateCreated.toLocaleString()}}
+      </span>
+    </div>
+  </div>

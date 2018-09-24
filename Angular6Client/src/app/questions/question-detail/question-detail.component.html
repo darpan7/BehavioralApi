@@ -1,0 +1,40 @@
+  <!--<div class="row">
+    <div class="col-xs-12">
+      <img 
+      [src]="recipe.imagePath" 
+      alt="{{story.name}}" 
+      class="img-responsive"
+      style="max-height: 150px">
+    </div>
+  </div> -->
+  <div class="row">
+    <div class="col-xs-12">
+      <h3>{{ routed_question.name }}</h3>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-xs-12">
+        <ul class="list-group">
+          <h4>Associated Stories:</h4>
+          <li class="list-group-item" *ngFor="let story of routed_stories">
+            <a routerLink="/stories/{{story.id}}">{{story.name}} - {{story.company.name}}</a>
+          </li>
+        </ul>
+      </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-xs-6">
+      Type: {{routed_question.type}}
+    </div>
+    <div class="col-xs-6">
+      <span class="pull-right">
+        id: {{routed_question.id}}
+      </span>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-xs-12">
+        created : {{routed_question.dateCreated.toLocaleString()}}
+      </div>
+  </div>

@@ -1,0 +1,15 @@
+<hr>
+<div class="row">
+    <div class="col-xs-12">
+      <button class="btn btn-success">New Story</button>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-xs-12">
+        <app-story-item 
+        *ngFor="let story of stories" 
+        [story]="story"></app-story-item>
+    </div>
+</div>
+  
