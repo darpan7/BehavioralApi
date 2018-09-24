@@ -8,5 +8,5 @@ import com.javasampleapproach.jpamysqlangular4.model.Question;
 import com.javasampleapproach.jpamysqlangular4.model.QuestionType;
 
 public interface QuestionRepository extends CrudRepository<Question, Long>{
-	List<Question> findByQType(QuestionType qType);
+	//List<Question> findByQType(QuestionType qType);
 }

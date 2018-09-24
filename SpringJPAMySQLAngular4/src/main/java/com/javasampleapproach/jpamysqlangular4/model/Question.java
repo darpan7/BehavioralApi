@@ -24,18 +24,23 @@ public class Question implements Serializable {
 	@Column(name = "question")
 	private String question;
 	
-	@ManyToOne
-	private QuestionType qType;
+	//@ManyToOne
+	//private QuestionType qType;
 	
 	@Column(name = "date_created")
 	private Date dateCreated;
 
-	protected Question(String question, QuestionType qtype) {
+	/*protected Question(String question, QuestionType qtype) {
 		super();
 		this.question = question;
 		this.qType = qtype;
 		this.dateCreated = Calendar.getInstance().getTime();
-		
+	}*/
+	
+	protected Question(String question) {
+		super();
+		this.question = question;
+		this.dateCreated = Calendar.getInstance().getTime();
 	}
 
 	public long getId() {
@@ -54,13 +59,13 @@ public class Question implements Serializable {
 		this.question = question;
 	}
 
-	public QuestionType getqType() {
-		return qType;
-	}
-
-	public void setqType(QuestionType qType) {
-		this.qType = qType;
-	}
+//	public QuestionType getqType() {
+//		return qType;
+//	}
+//
+//	public void setqType(QuestionType qType) {
+//		this.qType = qType;
+//	}
 	
 	public Date getDateCreated() {
 		return dateCreated;
@@ -70,10 +75,10 @@ public class Question implements Serializable {
 		this.dateCreated = dateCreated;
 	}
 
-	@Override
-	public String toString() {
-		return "Question [" + id + "= " + question + ", qType=" + qType + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Question [" + id + "= " + question + ", qType=" + qType + "]";
+//	}
 
 	@Override
 	public int hashCode() {
