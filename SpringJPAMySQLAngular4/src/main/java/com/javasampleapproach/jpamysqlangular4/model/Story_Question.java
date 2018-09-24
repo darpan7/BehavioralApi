@@ -1,7 +1,10 @@
 package com.javasampleapproach.jpamysqlangular4.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,8 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "questionTostory")
-public class QuestionJoinStory implements Serializable {
+@Table(name = "story_question")
+public class Story_Question implements Serializable {
 	private static final long serialVersionUID = -3009157732242241606L;
 	
 	@Id
@@ -19,13 +22,19 @@ public class QuestionJoinStory implements Serializable {
 	private long id;
 	
 	@ManyToOne
-	private Question question;
-	
-	@ManyToOne
 	private Story story;
 
-	protected QuestionJoinStory() {
+	@ManyToOne
+	private Question question;
+	
+	@Column(name = "date_created")
+	private Date dateCreated;
+	
+	protected Story_Question(Story s, Question q) {
 		super();
+		this.story = s;
+		this.question = q;
+		this.dateCreated = Calendar.getInstance().getTime();
 	}
 
 	public long getId() {
@@ -52,9 +61,17 @@ public class QuestionJoinStory implements Serializable {
 		this.story = story;
 	}
 
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
 	@Override
 	public String toString() {
-		return "QuestionJoinStory [id=" + id + ", question=" + question + ", story=" + story + "]";
+		return "Story_Question [" + id + ", question=" + question.getQuestion() + ", story=" + story.getTitle() + "]";
 	}
 	
 }

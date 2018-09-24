@@ -1,6 +1,8 @@
 package com.javasampleapproach.jpamysqlangular4.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,9 +26,16 @@ public class Question implements Serializable {
 	
 	@ManyToOne
 	private QuestionType qType;
+	
+	@Column(name = "date_created")
+	private Date dateCreated;
 
-	protected Question() {
+	protected Question(String question, QuestionType qtype) {
 		super();
+		this.question = question;
+		this.qType = qtype;
+		this.dateCreated = Calendar.getInstance().getTime();
+		
 	}
 
 	public long getId() {
@@ -52,10 +61,40 @@ public class Question implements Serializable {
 	public void setqType(QuestionType qType) {
 		this.qType = qType;
 	}
+	
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
 
 	@Override
 	public String toString() {
-		return "Question [id=" + id + ", question=" + question + ", qType=" + qType + "]";
+		return "Question [" + id + "= " + question + ", qType=" + qType + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Question other = (Question) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 	
 }

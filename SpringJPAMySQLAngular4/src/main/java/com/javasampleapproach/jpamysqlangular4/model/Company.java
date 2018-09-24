@@ -1,6 +1,8 @@
 package com.javasampleapproach.jpamysqlangular4.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,14 +22,18 @@ public class Company implements Serializable {
 
 	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "date_created")
+	private Date dateCreated;
 
 	protected Company() {
-		super();
+		this("Default");
 	}
 
 	public Company(String name) {
 		super();
 		this.name = name;
+		this.dateCreated = Calendar.getInstance().getTime();
 	}
 	public Company(Company copy){
 		this(copy.name);
@@ -46,6 +52,14 @@ public class Company implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 
 	@Override

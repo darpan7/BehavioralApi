@@ -1,6 +1,8 @@
 package com.javasampleapproach.jpamysqlangular4.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,36 +34,31 @@ public class Story implements Serializable {
 	private String result;
 	
 	@ManyToOne
-	private QuestionType qType;
-	
-	@ManyToOne
 	private StoryType sType;
 	
 	@ManyToOne
-	private Project project;
-	
-	@ManyToOne
 	private Company company;
+	
+	@Column(name = "date_created")
+	private Date dateCreated;
 
 	
-	public Story(String title, String situation, String taskAction, String result, QuestionType qType, StoryType sType,
-			Project project, Company company) {
+	public Story(String title, String situation, String taskAction, String result, StoryType sType,
+			Company company) {
 		super();
 		this.title = title;
 		this.situation = situation;
 		this.taskAction = taskAction;
 		this.result = result;
-		this.qType = qType;
 		this.sType = sType;
-		this.project = project;
 		this.company = company;
+		this.dateCreated = Calendar.getInstance().getTime();
 	}
 	
 	public Story(Story copy){
 		this(copy.title, copy.situation, 
 				copy.taskAction, copy.result,
-				copy.qType, copy.sType, copy.project, 
-				copy.company);
+				copy.sType,	copy.company);
 	}
 
 	protected Story() {
@@ -108,28 +105,12 @@ public class Story implements Serializable {
 		this.result = result;
 	}
 
-	public QuestionType getqType() {
-		return qType;
-	}
-
-	public void setqType(QuestionType qType) {
-		this.qType = qType;
-	}
-
 	public StoryType getsType() {
 		return sType;
 	}
 
 	public void setsType(StoryType sType) {
 		this.sType = sType;
-	}
-
-	public Project getProject() {
-		return project;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
 	}
 
 	public Company getCompany() {
@@ -139,12 +120,40 @@ public class Story implements Serializable {
 	public void setCompany(Company company) {
 		this.company = company;
 	}
+	
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
 
 	@Override
 	public String toString() {
-		return "Story [id=" + id + ", title=" + title + ", situation=" + situation + ", taskAction=" + taskAction
-				+ ", result=" + result + ", qType=" + qType + ", sType=" + sType + ", project=" + project + ", company="
-				+ company + "]";
+		return "Story [" + id + "= " + title + ", S: " + situation + ", company: " + company + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Story other = (Story) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 	
 	

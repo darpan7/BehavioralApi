@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.javasampleapproach</groupId>
-	<artifactId>jpa-mysql-angular-4</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>jpa-mysql-angular-6</artifactId>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>SpringJPAMySQLAngular4</name>
-	<description>Demo project for SpringBoot - JPA - MySQL - Angular 4</description>
+	<name>SpringJPAMySQLAngular6</name>
+	<description>Behavioral project for SpringBoot - JPA - MySQL - Angular 6</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
