@@ -13,22 +13,7 @@ import { Observable } from "rxjs";
 export class StoryService {
     storySelected = new EventEmitter<Story>();
     private baseUrl = 'http://localhost:8080/story';
-    private stories: Story[] = [
-        /*new Story(
-            0,
-            'StatsPoller', 
-            'Deutsche Telekom', 
-            0, 
-            'S: reduce poller execution time from 15 minute to 10 minute. T/A: re-balance load among all storm bolts. R: 90% traffic is finished in 10 minutes.'
-            ),
-        new Story(
-            1,
-            'DataRetention', 
-            'Deutsche Telekom', 
-            0, 
-            'S: remove customer centric data from cassandra. T/A: used topology file to remove ncs call. R: improved performance.'
-        )*/
-    ];
+    private stories: Story[] = [];
 
     constructor(private questionService: QuestionService, private http: HttpClient){
         let tmp_strs: Story[] = this.sqlAll();
