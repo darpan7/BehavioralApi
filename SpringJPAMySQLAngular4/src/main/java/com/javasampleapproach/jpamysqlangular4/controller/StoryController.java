@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javasampleapproach.jpamysqlangular4.model.Story;
+import com.javasampleapproach.jpamysqlangular4.model.Story_Question;
+import com.javasampleapproach.jpamysqlangular4.repo.CompanyRepository;
+import com.javasampleapproach.jpamysqlangular4.repo.QuestionRepository;
 import com.javasampleapproach.jpamysqlangular4.repo.StoryRepository;
 import com.javasampleapproach.jpamysqlangular4.repo.Story_QuestionRepository;
 
@@ -27,27 +30,31 @@ public class StoryController {
 	@Autowired
 	Story_QuestionRepository storyToQuestionService;
 	
+	@Autowired
+	QuestionRepository questionService;
+	
+	@Autowired
+	CompanyRepository companyService;
+	
 	@GetMapping(value="/story",  produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Story> getAll() {
-		//Map<Story, Iterable<Question>> map_story_to_questions = new HashMap<>();
 		List<Story> list = new ArrayList<>();
 		Iterable<Story> stories = storyService.findAll();
-		
-		/*stories.forEach(story -> {
-			Iterable<Question> questions = this.storyToQuestionService.findByStory(story);
-			map_story_to_questions.put(story, questions);
-		});*/
 		stories.forEach(list::add);
 		return list;
 	}
 	
-	@PostMapping(value="/plusstory")
+	@PostMapping(value="/insert_story")
 	public Story addStory(@RequestBody Story story) {
-
-		storyService.save(new Story(story));
+		this.storyService.save(new Story(story));
 		return story;
 	}
 
+	@GetMapping(value="/story/{story_id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	public Story findById(@PathVariable long story_id) {
+		return this.storyService.findOne(story_id);
+	}
+	
 	/*@GetMapping(value="/story/findbyquestiontype/{questionType}",  produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Story> findByQType(@PathVariable String questionType) {
 
@@ -61,34 +68,26 @@ public class StoryController {
 		List<Story> stories = storyService.findBySType(sTypeService.findOne(sType));
 		return stories;
 	}
+	*/
 	
-	@GetMapping(value="/story/findbyproject/{projectid}",  produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Story> findByProject(@PathVariable long projectid) {
-
-		List<Story> stories = storyService.findByProject(projectService.findOne(projectid));
-		return stories;
-	}
-
-	@GetMapping(value="/story/findbycompany/{companyid}",  produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value="/story/byCompany/{companyid}",  produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Story> findByCompany(@PathVariable long companyid) {
-
-		List<Story> stories = storyService.findByCompany(companyService.findOne(companyid));
+		List<Story> stories = this.storyService.findByCompany(this.companyService.findOne(companyid));
 		return stories;
 	}
 	
-	@GetMapping(value="/story/findbyquestion/{questionid}",  produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Story> findByQuestion(@PathVariable long questionid) {
+	@GetMapping(value="/story/byQuestion/{questionid}",  produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Story> findByQuestion(@PathVariable long question_id) {
 
-		List<QuestionJoinStory> qTostoryList = questionTostoryService.findByQuestion(questionService.findOne(questionid));
+		List<Story_Question> qTostoryList = this.storyToQuestionService.findByQuestion(this.questionService.findOne(question_id));
 		List<Story> stories = new ArrayList<Story>();
 		qTostoryList.forEach(join -> stories.add(join.getStory()));
 		return stories;
-	}*/
+	}
 	
-	@DeleteMapping(value="/minusstory/{id}")
+	@DeleteMapping(value="/remove_story/{id}")
 	public void deleteStory(@PathVariable long id){
-		
-		storyService.delete(id);
+		this.storyService.delete(id);
 	}
 
 }

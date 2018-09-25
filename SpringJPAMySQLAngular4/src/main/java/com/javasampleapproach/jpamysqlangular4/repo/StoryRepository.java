@@ -11,5 +11,5 @@ import com.javasampleapproach.jpamysqlangular4.model.StoryType;
 
 public interface StoryRepository extends CrudRepository<Story, Long>{
 	//List<Story> findBySType(StoryType sType);
-	//List<Story> findByCompany(Company company);
+	List<Story> findByCompany(Company company);
 }
