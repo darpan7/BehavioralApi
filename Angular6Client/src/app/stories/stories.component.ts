@@ -13,6 +13,7 @@ export class StoriesComponent implements OnInit {
   constructor(private storyService: StoryService, private router: Router) { }
 
   ngOnInit() {
+    console.log("Stories ts!")
     this.storyService.storySelected.subscribe(
       (story: Story) => {
         this.selectedStory = story;

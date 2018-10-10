@@ -1,9 +1,12 @@
 import { Question } from "../question.model";
 import { EventEmitter, Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable()
 export class QuestionService {
     questionSelected = new EventEmitter<Question>();
+    private baseUrl = 'http://localhost:8080/question';
     private questions: Question[] = [
         new Question(
             0,
@@ -17,12 +20,17 @@ export class QuestionService {
             )
     ];
 
-    constructor(){}
+    constructor(private http: HttpClient){}
 
     get(id) {
         return this.questions[id];
     }
     getQuestions() {
         return this.questions.slice();
+    }
+
+    questionsByStory(id: Number): Observable<Question[]> {
+        const url = this.baseUrl + "/story/" + id;
+        return this.http.get<Question[]>(url);
     }
 }

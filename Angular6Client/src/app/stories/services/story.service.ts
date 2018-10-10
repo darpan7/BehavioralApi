@@ -6,6 +6,7 @@ import { QuestionService } from "../../questions/services/question.service";
 import { Tag } from "../../Tags/tag.model";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { Util } from "../../common/util.service";
 
 @Injectable({
     providedIn: 'root' 
@@ -15,25 +16,25 @@ export class StoryService {
     private baseUrl = 'http://localhost:8080/story';
     private stories: Story[] = [];
 
-    constructor(private questionService: QuestionService, private http: HttpClient){
-        let tmp_strs: Story[] = this.sqlAll();
+    constructor(private questionService: QuestionService, private http: HttpClient, private util: Util){
+        /*let tmp_strs: Story[] = this.sqlAll();
         for (let stry of tmp_strs.slice()){
             let qs: Question[] = this.sqlQuestion(stry.id);
             for(let q of qs){
                 stry.registerQuestion(q);
             }
-        }
+        }*/
     }
     getByQuestion(id): Story[] {
         let tmp_strs: Story[] = [];
-        for (let stry of this.stories.slice()){
+        /*for (let stry of this.stories.slice()){
             for (let q of stry.questions.slice()){
                 if(q.id === id){
                     tmp_strs.push(stry);
                     break;
                 }
             }
-        }
+        }*/
         return tmp_strs.slice();
     }
     getStories(): Observable<any> {
@@ -64,7 +65,7 @@ export class StoryService {
 
     addStory(name: String, cid: Number, s: String, ta: String, r: String, qs, tgs){
         var c = new Company(cid, "Deutsche Telekom"); // TO DO: companyService.get(cid);
-        var sid = this.getRandomInt(0, 100);
+        var sid = this.util.getRandomInt(0, 100);
         var tmp_stry = new Story(sid, name, c, 0, s, ta, r);
 
         var qlist = qs; // TO DO: for(qid: qs) qlist.add(questionService.get(qid));
@@ -88,20 +89,24 @@ export class StoryService {
             tarr.push(this.tagService.get(tid));
         }*/
         
-        tarr.push(new Tag(1, "#proud")); tarr.push(new Tag(1, "#challenging")); tarr.push(new Tag(1, "#solved"));
+        tarr.push(new Tag(1, "#proud")); 
+        tarr.push(new Tag(1, "#challenging")); 
+        tarr.push(new Tag(1, "#solved"));
 
         for(let tg of tarr){
             tmp_stry.registerTag(tg);
-        }
-        
+        }        
     }
 
-    getRandomInt(min, max){
+    /*getRandomInt(min, max){
         return Math.floor(Math.random() * (max - min +1)) + min;
-    }
+    }*/
 
-    get(id){
-        return this.stories[0];
+    get(id: number): Observable<Story> {
+        const id_link = this.baseUrl + "/" + id;
+        console.log("url: " + id_link);
+        return this.http.get<Story>(id_link);
+        //return this.stories[0];
     }
 
     /*addIngredientsToShoppingList(ingredients: Ingredient[]){

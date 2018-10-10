@@ -20,8 +20,8 @@ export class StoryItemComponent implements OnInit {
   }
 
   onSelected(){
-    this.router.navigate([this.story.id], {relativeTo: this.activatedRoute});
-    //this.router.navigate(['/stories', '1']);
+    //this.router.navigate([this.story.id], {relativeTo: this.activatedRoute});
+    this.router.navigate(['/stories', this.story.id]);
     //this.storyService.storySelected.emit(this.story);
   }
 

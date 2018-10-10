@@ -30,7 +30,7 @@ public class Story_Question implements Serializable {
 	@Column(name = "date_created")
 	private Date dateCreated;
 	
-	protected Story_Question(Story s, Question q) {
+	public Story_Question(Story s, Question q) {
 		super();
 		this.story = s;
 		this.question = q;

@@ -37,7 +37,7 @@ public class Question implements Serializable {
 		this.dateCreated = Calendar.getInstance().getTime();
 	}*/
 	
-	protected Question(String question) {
+	public Question(String question) {
 		super();
 		this.question = question;
 		this.dateCreated = Calendar.getInstance().getTime();
