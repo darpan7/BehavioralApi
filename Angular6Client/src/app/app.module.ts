@@ -21,6 +21,7 @@ const appRoutes: Routes = [
   {path: 'stories/:id', component: StoryDetailComponent},
   {path: 'questions', component: QuestionsComponent},
   {path: 'questions/:id', component: QuestionDetailComponent},
+  {path: 'questions/new', component: QuestionItemComponent}
 ]
 @NgModule({
   declarations: [
