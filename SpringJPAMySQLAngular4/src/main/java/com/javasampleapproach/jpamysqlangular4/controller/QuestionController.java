@@ -36,7 +36,7 @@ public class QuestionController {
 	@Autowired
 	CompanyRepository companyService;
 	
-	@GetMapping(value="/question",  produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value="/questions",  produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Question> getAll() {
 		List<Question> list = new ArrayList<>();
 		Iterable<Question> stories = this.questionService.findAll();
@@ -50,7 +50,7 @@ public class QuestionController {
 		return story;
 	}*/
 
-	@GetMapping(value="/question/story/{story_id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value="/questions/story/{story_id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public Iterable<Question> questionsByStory(@PathVariable String story_id) {
 		return this.storyToQuestionService.findByStory(this.storyService.findOne(Long.parseLong(story_id)));
 	}
