@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Question } from '../question.model';
 import { QuestionService } from '../services/question.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-question-list',
@@ -8,7 +9,7 @@ import { QuestionService } from '../services/question.service';
   styleUrls: ['./question-list.component.css']
 })
 export class QuestionListComponent implements OnInit {
-  questions: Question[];
+  questions: Observable<Question[]>;
   constructor(private questionService: QuestionService) { }
 
   ngOnInit() {

@@ -5,17 +5,15 @@ import { Util } from "../common/util.service";
 
 export class Story {
     public id: Number;
-    public title: String;
+    public title: string;
     public dateCreated: Date;
-    //public dateUpdated: Date;
-    public situation: String;        
-    public taskAction: String;
-    public result: String;
-    //public parent_story: Number;
+    public situation: string;        
+    public taskAction: string;
+    public result: string;
     public company: Company;
     //public tags: Tag[] = [];
 
-    constructor(id: Number, name: String, company: Company, parent_story: Number, s: String, ta: String, r: String) {
+    constructor(id: Number, name: string, company: Company, parent_story: Number, s: string, ta: string, r: string) {
         this.id = id;
         this.title = name;
         this.company = company;

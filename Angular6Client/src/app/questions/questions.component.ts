@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Question } from './question.model';
 import { QuestionService } from './services/question.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-questions',
@@ -9,7 +10,7 @@ import { QuestionService } from './services/question.service';
 })
 export class QuestionsComponent implements OnInit {
   selectedQuestion: Question;
-  constructor(private questionService: QuestionService) { }
+  constructor(private questionService: QuestionService, private router: Router) { }
 
   ngOnInit() {
     this.questionService.questionSelected.subscribe(

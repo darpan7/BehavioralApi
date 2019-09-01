@@ -90,3 +90,17 @@ Make it Run first:
 2. Run AngularJs6 Application:
 	* `cd ~/<root of angular client application>
 	* `ng serve` to start client.
+
+
+# Load Data:
+
+* Import data:
+
+	- Copy dump.sql file to docker container: docker cp dump.sql local-mysql:/tmp/dump.sql
+	- Run this command inside mysql container: mysql -uroot -proot sample< /tmp/dump.sql
+
+* Export data:
+
+	- Create dump inside mysql container: mysqldump -uroot -proot sample > /tmp/dump.sql
+	- Get the dump file from container: docker cp local-mysql:/tmp/dump.sql dump.sql
+

@@ -14,28 +14,46 @@ import { Company } from '../../company/company.model';
 })
 export class StoryDetailComponent implements OnInit {
   @Input() story: Story;
-  private routed_story: Story = new Story(1, "", new Company(2, ""), 2, "", "", "");
-  //obsrvd_story: Observable<Object>;
+  private routed_story: Story = new Story(1, "", null, 2, "", "", "");
   obsrvd_story: Observable<Story>;
   questions: Observable<Question[]>;
-  constructor(private storyService: StoryService, private router: ActivatedRoute, private questionService: QuestionService) { }
+  id: number;
+  constructor(
+    private storyService: StoryService,
+    private router: ActivatedRoute,
+    private questionService: QuestionService,
+    private route: Router
+  ) { }
 
   ngOnInit() {
-    //this.obsrvd_story = this.storyService.get(this.router.snapshot.params['id']);
+    this.id = this.router.snapshot.params['id'];
     this.storyService.get(this.router.snapshot.params['id']).subscribe((data: Story)=> {
       this.routed_story = data;
       console.log("subscribing...");
+      console.log(this.routed_story);
+      console.log("in string: ");
+      console.log(this.routed_story);
+      console.log(this.routed_story.company);
+      console.log(this.routed_story.title);
+      this.questions = this.storyService.questionsByStory(this.routed_story.id);
     });
-    console.log(this.routed_story.title);
     /*this.storyService.get(this.router.snapshot.params['id']).subscribe(object => {
       this.story = object as Story
     });*/
-    console.log(this.routed_story);
-    console.log("in string: " + this.routed_story);
-    //this.obsrvd_story = this.story;
-    //this.routed_story = this.story;
-    this.questions = this.questionService.questionsByStory(this.routed_story.id);
+    
   }
 
+  onEdit() {
+    // this.router.navigate(['edit'], {relativeTo: this.route});
+    const url = '/stories/' + this.id + '/edit';
+    this.route.navigate([url]);
+  }
+
+  onDelete() {
+    const url = '/stories/';
+    this.storyService.delete(this.id).subscribe(data => {
+      this.route.navigate([url]);
+    });
+  }
   
 }

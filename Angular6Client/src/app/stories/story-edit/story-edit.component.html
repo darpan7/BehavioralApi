@@ -1,0 +1,210 @@
+
+<hr>
+<!-- <form [formGroup]="myForm">
+	<div *ngFor="let data of emails">
+		<input type="checkbox" (change)="onChange(data.email, $event.target.checked)"> {{data.email}}<br>
+	</div>
+</form>
+<pre>Form values: {{myForm.value | json}}</pre> -->
+<form [formGroup]="storyForm" (ngSubmit)="onSubmit()">
+  <div class="form-group col-xs-6">
+    <label for="inputEmail4">Name</label>
+    <input type="text" class="form-control"
+      formControlName="title"
+      placeholder="Story name">
+  </div>
+  <div class="form-group col-xs-6">
+    <label for="company">Company</label>
+    <!-- <select class="form-control">
+      <option *ngFor="let company of companies| async" 
+        value="{{company.id}}">{{company.name}}</option>
+    </select> -->
+    <ng-select [items]="companies | async"
+           bindLabel="name"
+           autofocus
+           bindValue="id"
+           formControlName="selectedComapnyId">
+    </ng-select>
+    <!-- <input type="number" class="form-control" formControlName="company" placeholder="Start salary"> -->
+  </div>
+  <div class="form-group col-xs-12">
+    <label for="situation">Situation</label>
+    <textarea 
+      class="form-control"
+      placeholder="Situation"
+      rows="2"
+      id="situation"
+      formControlName="situation"></textarea>
+  </div>
+  <div class="form-group col-xs-12">
+    <label for="taskAction">Task/Actions</label>
+    <textarea 
+      class="form-control"
+      placeholder="Situation"
+      rows="2"
+      id="taskAction"
+      formControlName="taskAction"></textarea>
+  </div>
+  <div class="form-group col-xs-12">
+    <label for="result">Results</label>
+    <textarea 
+      class="form-control"
+      placeholder="Results"
+      rows="2"
+      id="result"
+      formControlName="result"></textarea>
+  </div>
+  <!-- <div class="form-group col-xs-12"> -->
+  <div class="form-group col-xs-12">
+    <ngb-tabset type="pills" [orientation]="currentOrientation"> 
+        <ngb-tab title="Questions">
+          <ng-template ngbTabContent> 
+            <!-- <select multiple class="form-control">
+              <option *ngFor="let question of questions| async" value="{{question.id}}">{{question.question}}</option>
+            </select> -->
+            <!-- <div *ngFor="let data of questions| async" class="form-control">
+              <input type="checkbox" (change)="onChange(data.id, $event.target.checked)"> {{data.question}}<br>
+            </div> -->
+            <div *ngIf="editMode; else newstory">
+              <div formArrayName="t_qs" class="form-control"
+                *ngFor="let q of storyForm.controls.t_qs.controls; let i = index">
+                <input type="checkbox" [formControlName]="i">
+                {{(questions| async)?.length && (questions| async)[i].question }}
+              </div>
+            </div>
+            <ng-template #newstory>
+              <div formArrayName="t_qs" class="form-control"
+                *ngFor="let q of storyForm.controls.t_qs.controls; let i = index" [formGroupName]="i">
+                <input type="text" class="form-control" formControlName="id">
+                <!-- {{q.question}} -->
+              </div>
+            </ng-template>
+            <div *ngIf="questions$ | async as questions; else banner">
+              <!-- <div formArrayName="t_qs" class="form-control"
+                *ngFor="let q of storyForm.controls.t_qs.controls; let i = index">
+                <input type="checkbox" [formControlName]="i">
+                {{(questions| async)?.length && (questions| async)[i].question }}
+              </div> -->
+              
+            </div>
+            <ng-template #banner>
+              Loading...
+            </ng-template>
+            <!-- <ngb-pagination [collectionSize]="70" [(page)]="page" aria-label="Default pagination"></ngb-pagination> -->
+            <!-- <div formArrayName="qs">
+              <label
+                *ngFor="let q of storyForm.get('qs').controls; let i = index"
+                [formGroupName]="i">
+                <input type="checkbox" class="form-control" formControlName="name"/>
+                >>>>{{q[0]}}<<
+              </label>
+            </div> -->
+
+             <!-- <div formArrayName="qs"> -->
+              <!-- <label formArrayName="qs"
+                *ngFor="let q of storyForm.controls.qs.controls; let i = index">
+                <span formGroupName="{{i}}">
+                  <input type="checkbox" formControlName="i">
+                  {{q[i].name}}
+                </span>
+              </label> -->
+            <!-- </div> -->
+            <!-- <div class="list-group">
+  
+              <input type="checkbox" name="CheckBoxInputName" value="Value1" id="CheckBox1" />
+              <label class="list-group-item" for="CheckBox1">Caption for CheckBox1</label>
+              
+              <input type="checkbox" name="CheckBoxInputName" value="Value2" id="CheckBox2" />
+              <label class="list-group-item" for="CheckBox2">Caption for CheckBox2</label>
+              
+              <input type="checkbox" name="CheckBoxInputName" value="Value3" id="CheckBox3" />
+              <label class="list-group-item" for="CheckBox3">Caption for CheckBox3</label>
+              
+              <input type="checkbox" name="CheckBoxInputName" value="Value4" id="CheckBox4" />
+              <label class="list-group-item" for="CheckBox4">Caption for CheckBox4</label>
+              
+            </div> -->
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab title="Tags">
+            <ng-template ngbTabContent>
+              <!-- <ng-multiselect-dropdown
+              [placeholder]="'Select question(s)'"
+              [data]="questions| async"
+              formControlName="taskAction"
+              [settings]="dropdownSettings"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+            ></ng-multiselect-dropdown> -->
+              <ng-select [items]="tags"
+                  [addTag]="addTagPromise"
+                  multiple="true"
+                  bindLabel="name"
+                  [loading]="loading"
+                  formControlName="sc">
+                  <ng-template ng-tag-tmp let-search="searchTerm">
+                      <b>create new</b>: {{search}}
+                  </ng-template>
+              </ng-select>
+            </ng-template>
+            <!-- <ng-select [items]="tags"
+                placeholder="Select tags"
+                [addTag]="addTagPromise"
+                multiple="true"
+                bindLabel="name"
+                [loading]="loading"
+                formControlName="sc">
+                <ng-template ng-tag-tmp let-search="searchTerm">
+                    <b>create new</b>: {{search}}
+                </ng-template>
+            </ng-select> -->
+        </ngb-tab>
+    </ngb-tabset>
+  </div>
+    <!-- <ul class="nav nav-pills">
+      <li class="active">
+        <label for="tags">Tags</label>
+        <select multiple class="form-control">
+          <option *ngFor="let tag of tags" value="{{tag.id}}">{{tag.name}}</option>
+        </select>
+      </li>
+      <li>
+        <label for="questions">Questions</label>
+        <select multiple class="form-control">
+          <option *ngFor="let question of questions| async" value="{{question.id}}">{{question.question}}</option>
+        </select>
+      </li>
+    </ul> -->
+  <!-- <div class="form-group col-xs-12">
+    <label for="tags">Tags</label>
+    <select multiple class="form-control">
+      <option *ngFor="let tag of tags" value="{{tag.id}}">{{tag.name}}</option>
+    </select>
+  </div>
+  <div class="form-group col-xs-12">
+    <label for="questions">Questions</label>
+    <select multiple class="form-control">
+      <option *ngFor="let question of questions| async" value="{{question.id}}">{{question.question}}</option>
+    </select> 
+  </div> -->
+  <div class="col-xs-12">
+    <button type="submit" class="btn btn-success" [disabled]="!storyForm.valid">Save</button>
+    &nbsp;<button type="button" class="btn btn-danger" routerLink="/companies">Cancel</button>
+  </div>
+  <!-- <pre>Form values: {{myForm.value | json}}</pre> -->
+</form>
+<!-- <div *ngFor="let sc of tags">
+  {{sc.name}}
+</div>
+<ng-select [items]="tags"
+    placeholder="Select tags"
+    [addTag]="addTagPromise"
+    multiple="true"
+    bindLabel="name"
+    [loading]="loading"
+    [(ngModel)]="selectedCompanies">
+    <ng-template ng-tag-tmp let-search="searchTerm">
+        <b>create new</b>: {{search}}
+    </ng-template>
+</ng-select> -->

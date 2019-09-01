@@ -1,0 +1,18 @@
+<hr>
+<div class="row">
+    <div class="col-xs-12">
+      <!-- <a routerLink="/questions/new">New Company 1</a> -->
+      <button class="btn btn-success" routerLink="/companies/new">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Company
+      </button>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-xs-12">
+        <app-company-item 
+        *ngFor="let company of companies | async" 
+        [company]="company"></app-company-item>
+    </div>
+</div>
+  

@@ -13,17 +13,11 @@ import { Util } from "../../common/util.service";
 })
 export class StoryService {
     storySelected = new EventEmitter<Story>();
-    private baseUrl = 'http://localhost:8080/story';
+    private baseUrl = 'http://localhost:8080/stories';
     private stories: Story[] = [];
 
     constructor(private questionService: QuestionService, private http: HttpClient, private util: Util){
-        /*let tmp_strs: Story[] = this.sqlAll();
-        for (let stry of tmp_strs.slice()){
-            let qs: Question[] = this.sqlQuestion(stry.id);
-            for(let q of qs){
-                stry.registerQuestion(q);
-            }
-        }*/
+       
     }
     getByQuestion(id): Story[] {
         let tmp_strs: Story[] = [];
@@ -63,8 +57,8 @@ export class StoryService {
         return qs.slice();
     }
 
-    addStory(name: String, cid: Number, s: String, ta: String, r: String, qs, tgs){
-        var c = new Company(cid, "Deutsche Telekom"); // TO DO: companyService.get(cid);
+    addStory(name: string, cid: number, s: string, ta: string, r: string, qs, tgs){
+        var c = new Company(cid, "Deutsche Telekom", null, null, null, 0, 0, null); // TO DO: companyService.get(cid);
         var sid = this.util.getRandomInt(0, 100);
         var tmp_stry = new Story(sid, name, c, 0, s, ta, r);
 
@@ -112,4 +106,24 @@ export class StoryService {
     /*addIngredientsToShoppingList(ingredients: Ingredient[]){
         this.shoppingListService.addIngredients(ingredients);
     }*/
+    
+    questionsByStory(id: Number): Observable<Question[]> {
+        const URL = this.baseUrl + "/" + id + "/questions";
+        return this.http.get<Question[]>(URL);
+    }
+
+    create(story: Story): Observable<Story> {
+        console.log('FROM SERVICE');
+        console.log(story);
+    	return this.http.post<Story>(this.baseUrl, story);
+    }
+
+    update(id: number, story: Story): Observable<Story> {
+        const id_link = this.baseUrl + "/" + id;
+    	return this.http.put<Story>(id_link, story);
+    }
+
+    delete(id: number): Observable<Story> {
+        return this.http.delete<Story>(this.baseUrl + "/" + id);
+    }
 }
