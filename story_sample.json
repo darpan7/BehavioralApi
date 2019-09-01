@@ -1,2 +1,0 @@
-[{"id":1, "date_created":"2019-07-11 00:00:00", "result":"Result", "situation":"Situation", "action":"Action", "title":"About me", "company_id":1, "s_type_id":1},
- {"id":2, "date_created":"2019-07-10 00:08:23", "result":"RESULT", "situation":"SITUATION", "action":"ACTION", "title":"Celery pickle serializer", "company_id":1, "s_type_id":1}]
